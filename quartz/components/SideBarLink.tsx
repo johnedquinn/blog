@@ -6,7 +6,7 @@ import { GlobalConfiguration } from "../cfg"
 // USER_DEFINED WHOLE FILE
 interface SBOptions {
   title: string,
-  path: SimpleSlug,
+  path: SimpleSlug | string,
 }
 
 const defaultOptions = (cfg: GlobalConfiguration): SBOptions => ({
@@ -20,12 +20,13 @@ export default ((userOpts?: Partial<SBOptions>) => {
     cfg,
   }: QuartzComponentProps) => {
     const opts = { ...defaultOptions(cfg), ...userOpts }
+    const href = (typeof opts.path === 'string') ? opts.path : resolveRelative(fileData.slug!, opts.path)
     return (
               <div class="sidebar-link">
                 <div class="section">
                   <div class="desc">
                     <h3>
-                      <a href={resolveRelative(fileData.slug!, opts.path)}>
+                      <a href={href}>
                         {opts.title}
                       </a>
                     </h3>

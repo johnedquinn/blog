@@ -19,7 +19,6 @@ export const sharedPageComponents: SharedLayout = {
       GitHub: "https://github.com/johnedquinn",
       LinkedIn: "https://www.linkedin.com/in/johnedquinn/",
       Instagram: "https://www.instagram.com/johnedquinn/",
-      Email: "mailto:lump-kinfolk.0m@icloud.com"
     },
   }),
 }
@@ -59,14 +58,17 @@ export function byDateAndAlphabetical(): (a: FileNode, b: FileNode) => number {
 }
 
 const spacer = Component.MobileOnly(Component.Spacer())
-const allPosts = Component.SideBarLink({ title: "Blog Posts", path: "/blog" as SimpleSlug })
+const home = Component.SideBarLink({ title: "Back to Main Site", path: "https://www.johnedq.com" })
+const allPosts = Component.SideBarLink({ title: "All Posts", path: "/blog" as SimpleSlug })
 const tags = Component.SideBarLink({ title: "Tags", path: "/tags" as SimpleSlug })
 var column = Component.Column(
   [
     Component.PageTitle(),
     spacer,
+    home,
+    Component.HorizontalRule(),
     allPosts,
-    tags
+    tags,
   ]
 )
 

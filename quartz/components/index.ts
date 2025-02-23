@@ -6,6 +6,7 @@ import ArticleTitle from "./ArticleTitle"
 import Darkmode from "./Darkmode"
 import Head from "./Head"
 import PageTitle from "./PageTitle"
+import BlogTitle from "./BlogTitle"
 import ContentMeta from "./ContentMeta"
 import Spacer from "./Spacer"
 import TableOfContents from "./TableOfContents"
@@ -22,6 +23,7 @@ import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import SideBarLinks from "./SideBarLinks"
 import SideBarLink from "./SideBarLink"
+import HorizontalRule from "./HorizontalRule"
 import TableOfContentsCustom from "./TableOfContentsCustom"
 import ProfilePhoto from "./ProfilePhoto"
 import Column from "./Column"
@@ -35,6 +37,7 @@ export {
   Darkmode,
   Head,
   PageTitle,
+  BlogTitle,
   ContentMeta,
   Spacer,
   TableOfContents,
@@ -52,6 +55,7 @@ export {
   Comments,
   SideBarLinks,
   SideBarLink,
+  HorizontalRule,
   TableOfContentsCustom,
   ProfilePhoto,
   Column,
