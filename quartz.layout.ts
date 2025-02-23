@@ -6,11 +6,7 @@ import { SimpleSlug } from "./quartz/util/path"
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [
-    Component.Column(
-      [Component.Search()]
-    )
-  ],
+  header: [],
   afterBody: [
     Component.SubscribeForm(),
   ],
@@ -59,6 +55,7 @@ export function byDateAndAlphabetical(): (a: FileNode, b: FileNode) => number {
 
 const spacer = Component.MobileOnly(Component.Spacer())
 const home = Component.SideBarLink({ title: "Back to Main Site", path: "https://www.johnedq.com" })
+const blogHome = Component.SideBarLink({ title: "Blog Home", path: "/" as SimpleSlug })
 const allPosts = Component.SideBarLink({ title: "All Posts", path: "/blog" as SimpleSlug })
 const tags = Component.SideBarLink({ title: "Tags", path: "/tags" as SimpleSlug })
 var column = Component.Column(
@@ -66,9 +63,16 @@ var column = Component.Column(
     Component.PageTitle(),
     spacer,
     home,
+    spacer,
     Component.HorizontalRule(),
+    spacer,
+    blogHome,
     allPosts,
     tags,
+    spacer,
+    Component.HorizontalRule(),
+    spacer,
+    Component.Search(),
   ]
 )
 
