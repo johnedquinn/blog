@@ -370,6 +370,11 @@ export async function handleBuild(argv) {
 
       let fp = req.url?.split("?")[0] ?? "/"
 
+      // Redirect homepage to the blog posts page
+      if (fp === "/" || fp === "/index.html") {
+        fp = "/blog/"
+      }
+
       // handle redirects
       if (fp.endsWith("/")) {
         // /trailing/
