@@ -21,11 +21,16 @@ import { write } from "./helpers"
 import { i18n } from "../../i18n"
 import DepGraph from "../../depgraph"
 
-interface FolderPageOptions extends FullPageLayout {
+interface HomePageOptions extends FullPageLayout {
   sort?: (f1: QuartzPluginData, f2: QuartzPluginData) => number
 }
 
-export const FolderPage: QuartzEmitterPlugin<Partial<FolderPageOptions>> = (userOpts) => {
+/**
+ * This is totally buggy, but it's a start. This just replaces the content of /blog and puts it at the root index.
+ * @param userOpts 
+ * @returns 
+ */
+export const HomePage: QuartzEmitterPlugin<Partial<HomePageOptions>> = (userOpts) => {
   const opts: FullPageLayout = {
     ...sharedPageComponents,
     ...defaultListPageLayout,
@@ -38,7 +43,7 @@ export const FolderPage: QuartzEmitterPlugin<Partial<FolderPageOptions>> = (user
   const Body = BodyConstructor()
 
   return {
-    name: "FolderPage",
+    name: "HomePage",
     getQuartzComponents() {
       return [
         Head,
@@ -73,21 +78,26 @@ export const FolderPage: QuartzEmitterPlugin<Partial<FolderPageOptions>> = (user
       const fps: FilePath[] = []
       const allFiles = content.map((c) => c[1].data)
       const cfg = ctx.cfg.configuration
+      const source = "blog" as FullSlug
+    
+      const folders: Set<SimpleSlug> = new Set();
+      folders.add("." as SimpleSlug);
 
-      const folders: Set<SimpleSlug> = new Set(
+      const blogFolder: SimpleSlug =
         allFiles.flatMap((data) => {
           return data.slug
             ? _getFolders(data.slug).filter(
                 (folderName) => {
-                  return (folderName !== "." && folderName !== "tags") || data.slug === "index"
+                  return folderName === "blog"
                 }
               )
             : []
-        }),
-      )
+        })[0];
+
+
 
       const folderDescriptions: Record<string, ProcessedContent> = Object.fromEntries(
-        [...folders].map((folder) => [
+        [blogFolder].map((folder) => [
           folder,
           defaultProcessedContent({
             slug: joinSegments(folder, "index") as FullSlug,
@@ -106,7 +116,7 @@ export const FolderPage: QuartzEmitterPlugin<Partial<FolderPageOptions>> = (user
         }
       }
 
-      for (const folder of folders) {
+      for (const folder of [blogFolder]) {
         const slug = joinSegments(folder, "index") as FullSlug
         const externalResources = pageResources(pathToRoot(slug), resources)
         const [tree, file] = folderDescriptions[folder]
@@ -120,11 +130,12 @@ export const FolderPage: QuartzEmitterPlugin<Partial<FolderPageOptions>> = (user
           allFiles,
         }
 
-        const content = renderPage(cfg, slug, componentData, opts, externalResources)
+        const content = renderPage(cfg, source, componentData, opts, externalResources)
+        const output = joinSegments(".", "index") as FullSlug
         const fp = await write({
           ctx,
           content,
-          slug,
+          slug: output,
           ext: ".html",
         })
 

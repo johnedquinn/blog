@@ -370,16 +370,9 @@ export async function handleBuild(argv) {
 
       let fp = req.url?.split("?")[0] ?? "/"
 
-      // Redirect homepage to the blog posts page
-      if (fp === "/" || fp === "/index.html") {
-        console.log("File Path is index!!!!: " + fp)
-        fp = "/blog/"
-      }
-
       // handle redirects
       if (fp.endsWith("/")) {
         // /trailing/
-        console.log("File Path: " + fp)
         // does /trailing/index.html exist? if so, serve it
         const indexFp = path.posix.join(fp, "index.html")
         if (fs.existsSync(path.posix.join(argv.output, indexFp))) {

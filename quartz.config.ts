@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "johnedq.com",
+    baseUrl: "blog.johnedq.com",
     ignorePatterns: ["private", "templates", ".obsidian", ".github"],
     defaultDateType: "created",
     theme: {
@@ -84,6 +84,7 @@ const config: QuartzConfig = {
       Plugin.ContentPage(),
       Plugin.FolderPage(),
       Plugin.TagPage(),
+      Plugin.HomePage(),
       Plugin.ContentIndex({
         enableSiteMap: true,
         enableRSS: true,
